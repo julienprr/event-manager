@@ -1,0 +1,63 @@
+# =====================================
+# Java / Maven
+# =====================================
+target/
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+replay_pid*
+
+# =====================================
+# Spring Boot
+# =====================================
+# logs file
+logs/
+*.log
+*.log.*
+
+# local config files
+application-local.properties
+application-local.yml
+
+# =====================================
+# IDE / Editors
+# =====================================
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# VSCode
+.vscode/
+
+# MacOS
+.DS_Store
+
+# =====================================
+# Docker
+# =====================================
+# Volumes et données persistantes
+**/postgres_data/
+**/pgadmin_data/
+
+# auto-generated docker files
+docker-compose.override.yml
+
+# =====================================
+# Tests / Coverage
+# =====================================
+test-output/
+surefire-reports/
+jacoco.exec
+coverage/
+
+# =====================================
+# Environment & secrets
+# =====================================
+.env
+.env.local
+.env.development.local
+.env.production.local
+
