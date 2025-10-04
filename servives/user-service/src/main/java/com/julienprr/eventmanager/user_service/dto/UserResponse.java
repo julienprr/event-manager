@@ -1,6 +1,7 @@
 package com.julienprr.eventmanager.user_service.dto;
 
 import com.julienprr.eventmanager.user_service.model.Role;
+import com.julienprr.eventmanager.user_service.model.User;
 import lombok.*;
 
 @Getter @Setter
@@ -12,10 +13,14 @@ public class UserResponse {
     private String lastname;
     private String email;
     private Role role;
-    private String avatarUrl;
-    private String bio;
-    private String city;
-    private String country;
 
-
+    public static UserResponse fromEntity(User user) {
+        return UserResponse.builder()
+                .id(user.getId())
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build();
+    }
 }
