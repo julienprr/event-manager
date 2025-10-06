@@ -13,14 +13,4 @@ public class UserResponse {
     private String lastname;
     private String email;
     private Role role;
-
-    public static UserResponse fromEntity(User user) {
-        return UserResponse.builder()
-                .id(user.getId())
-                .firstname(user.getFirstname())
-                .lastname(user.getLastname())
-                .email(user.getEmail())
-                .role(user.getRole())
-                .build();
-    }
 }

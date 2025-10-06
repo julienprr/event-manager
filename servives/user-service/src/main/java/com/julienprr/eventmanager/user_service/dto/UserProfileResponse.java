@@ -27,20 +27,4 @@ public class UserProfileResponse {
     // Notification preferences
     private boolean emailNotificationsEnabled;
     private boolean smsNotificationsEnabled;
-
-    public static UserProfileResponse fromEntity(User user) {
-        return UserProfileResponse.builder()
-                .id(user.getId())
-                .firstname(user.getFirstname())
-                .lastname(user.getLastname())
-                .email(user.getEmail())
-                .role(user.getRole())
-                .avatarUrl(user.getAvatarUrl())
-                .bio(user.getBio())
-                .city(user.getCity())
-                .country(user.getCountry())
-                .emailNotificationsEnabled(user.isEmailNotificationsEnabled())
-                .smsNotificationsEnabled(user.isSmsNotificationsEnabled())
-                .build();
-    }
 }
