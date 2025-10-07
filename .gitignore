@@ -35,12 +35,10 @@ out/
 # MacOS
 .DS_Store
 
-# =====================================
-# Docker
-# =====================================
-# Volumes et données persistantes
-**/postgres_data/
-**/pgadmin_data/
+# === Docker volumes ===
+infra/volume-data
+docker/keycloak/realms/
+docker-data/
 
 # auto-generated docker files
 docker-compose.override.yml
