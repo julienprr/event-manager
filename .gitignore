@@ -37,8 +37,8 @@ out/
 
 # === Docker volumes ===
 infra/volume-data
-docker/keycloak/realms/
-docker-data/
+infra/docker/keycloak/realms/
+infra/docker-data/
 
 # auto-generated docker files
 docker-compose.override.yml
