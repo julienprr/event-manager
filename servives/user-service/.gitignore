@@ -19,6 +19,13 @@ target/
 *.iml
 *.ipr
 
+# === Docker volumes ===
+volume-data/
+docker/keycloak/realms/
+docker-data/
+*.log
+
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
