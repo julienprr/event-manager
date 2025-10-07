@@ -2,9 +2,15 @@ package com.julienprr.eventmanager.user_service.dto;
 
 import com.julienprr.eventmanager.user_service.model.Role;
 import com.julienprr.eventmanager.user_service.model.UserStatus;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AdminUserResponse {
     private String firstname;
     private String lastname;
