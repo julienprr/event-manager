@@ -1,7 +1,6 @@
 package com.julienprr.eventmanager.user_service.service;
 
 import com.julienprr.eventmanager.user_service.dto.SignupRequest;
-import com.julienprr.eventmanager.user_service.dto.UserResponse;
 import com.julienprr.eventmanager.user_service.exception.EmailAlreadyUsedException;
 import com.julienprr.eventmanager.user_service.exception.ResourceNotFoundException;
 import com.julienprr.eventmanager.user_service.model.User;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -102,8 +100,53 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User updateUserProfileByEmail(String email, UpdateUserProfileRequest request) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        if (request.getFirstname() != null) {
+            user.setFirstname(request.getFirstname());
+        }
+        if (request.getLastname() != null) {
+            user.setLastname(request.getLastname());
+        }
+        if (request.getBio() != null) {
+            user.setBio(request.getBio());
+        }
+        if (request.getCity() != null) {
+            user.setCity(request.getCity());
+        }
+        if (request.getCountry() != null) {
+            user.setCountry(request.getCountry());
+        }
+        if (request.getAvatarUrl() != null) {
+            user.setAvatarUrl(request.getAvatarUrl());
+        }
+
+        user.setUpdatedAt(LocalDateTime.now());
+
+        return userRepository.save(user);
+    }
+
+    @Override
     public User updateNotificationSettings(Long userId, UpdateNotificationSettingsRequest request) {
         User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        if (request.getEmailNotificationsEnabled() != null) {
+            user.setEmailNotificationsEnabled(request.getEmailNotificationsEnabled());
+        }
+        if (request.getSmsNotificationsEnabled() != null) {
+            user.setSmsNotificationsEnabled(request.getSmsNotificationsEnabled());
+        }
+
+        user.setUpdatedAt(LocalDateTime.now());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateNotificationSettingsByEmail(String email, UpdateNotificationSettingsRequest request) {
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         if (request.getEmailNotificationsEnabled() != null) {
@@ -128,14 +171,4 @@ public class UserService implements IUserService {
         return userRepository.save(user);
     }
 
-
-    @Override
-    public List<UserResponse> convertToDto(List<User> users) {
-        return users.stream().map(user -> modelMapper.map(user, UserResponse.class)).collect(Collectors.toList());
-    }
-
-    @Override
-    public UserResponse convertToDto(User user) {
-        return modelMapper.map(user, UserResponse.class);
-    }
 }

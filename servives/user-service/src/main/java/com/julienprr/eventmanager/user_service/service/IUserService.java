@@ -20,11 +20,12 @@ public interface IUserService {
 
     User updateUserProfile(Long userId, UpdateUserProfileRequest request);
 
+    User updateUserProfileByEmail(String email, UpdateUserProfileRequest request);
+
     User updateNotificationSettings(Long userId, UpdateNotificationSettingsRequest request);
+
+    User updateNotificationSettingsByEmail(String email, UpdateNotificationSettingsRequest request);
 
     User changeUserStatus(Long userId, ChangeUserStatusRequest request);
 
-    List<UserResponse> convertToDto(List<User> users);
-
-    UserResponse convertToDto(User user);
 }
