@@ -1,8 +1,6 @@
-version: '4'
-
 services:
   # =========================
-  # PostgreSQL pour UserService
+  # PostgreSQL for UserService
   # =========================
   postgres-user:
     image: postgres:15-alpine
@@ -20,7 +18,7 @@ services:
       - event-network
 
   # =========================
-  # pgAdmin (facultatif)
+  # pgAdmin
   # =========================
   pgadmin:
     image: dpage/pgadmin4
@@ -36,15 +34,48 @@ services:
     networks:
       - event-network
 
-# -------------------------
-# Volumes persistants
-# -------------------------
-volumes:
-  postgres_user_data:
+  # =========================
+  # MySQL for Keycloak
+  # =========================
+  keycloak-mysql:
+    container_name: keycloak-mysql
+    image: mysql:8
+    volumes:
+      - ./volume-data/mysql_keycloak_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+
+  # =========================
+  # MySQL for Keycloak
+  # =========================
+  keycloak:
+    container_name: keycloak
+    image: quay.io/keycloak/keycloak:24.0.1
+    command: [ "start-dev", "--import-realm" ]
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8090:8080"
+    volumes:
+      - ./docker/keycloak/realms/:/opt/keycloak/data/import/
+    depends_on:
+      - keycloak-mysql
 
 # -------------------------
-# Réseau commun
+# Common Network
 # -------------------------
 networks:
   event-network:
     driver: bridge
+
+
+
