@@ -20,7 +20,7 @@ target/
 *.ipr
 
 # === Docker volumes ===
-volume-data/
+infra/volume-data/
 docker/keycloak/realms/
 docker-data/
 *.log
