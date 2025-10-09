@@ -6,17 +6,16 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users")
+@Table(name = "participants")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @Builder
-public class User {
+public class Participant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // --- Identité ---
     @Column(nullable = false)
     private String firstname;
 
@@ -27,29 +26,32 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private String password;   //  hashé avec BCrypt
+    private String password;
 
-    // --- Profil ---
+    private String avatarUrl;
+    private String bio;
+    private String city;
+    private String country;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private ParticipantStatus status;
 
-    private String avatarUrl;       // optionnel
-    private String bio;             // optionnel
-    private String city;            // optionnel
-    private String country;         // optionnel
-
-    // --- Statut ---
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private UserStatus status;      // ACTIVE, SUSPENDED, DELETED
-
-    // --- Audit ---
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime lastLoginAt;
 
-    // --- Notifications ---
     private boolean emailNotificationsEnabled;
     private boolean smsNotificationsEnabled;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }

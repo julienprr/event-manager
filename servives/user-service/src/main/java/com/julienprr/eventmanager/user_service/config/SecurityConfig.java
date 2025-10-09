@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/users/signup",
+                                "/api/participants/signup",
                                 "/actuator/health",
                                 "/actuator/info",
                                 "/v3/api-docs/**",

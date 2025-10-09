@@ -1,7 +1,6 @@
-package com.julienprr.eventmanager.user_service.dto;
+package com.julienprr.eventmanager.user_service.dto.participant;
 
 
-import com.julienprr.eventmanager.user_service.model.Role;
 import lombok.*;
 
 @Getter
@@ -9,13 +8,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserPublicProfileResponse {
+public class ParticipantPublicProfileResponse {
 
     private String firstname;
     private String lastname;
-    private Role role;
-
-    // Profile info
     private String avatarUrl;
     private String bio;
     private String city;

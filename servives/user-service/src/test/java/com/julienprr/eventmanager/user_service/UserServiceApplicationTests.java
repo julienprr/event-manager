@@ -1,8 +1,8 @@
 package com.julienprr.eventmanager.user_service;
 
-import com.julienprr.eventmanager.user_service.model.User;
-import com.julienprr.eventmanager.user_service.model.UserStatus;
-import com.julienprr.eventmanager.user_service.repository.UserRepository;
+import com.julienprr.eventmanager.user_service.model.Participant;
+import com.julienprr.eventmanager.user_service.model.ParticipantStatus;
+import com.julienprr.eventmanager.user_service.repository.ParticipantRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +26,7 @@ class UserServiceApplicationTests {
     private int port;
 
     @Autowired
-    private UserRepository userRepository;
+    private ParticipantRepository userRepository;
 
     private static String signupRequest(String email) {
         return """
@@ -34,8 +34,7 @@ class UserServiceApplicationTests {
                   "firstname": "John",
                   "lastname": "Doe",
                   "email": "%s",
-                  "password": "secret123",
-                  "role": "ATTENDEE"
+                  "password": "secret123"
                 }
                 """.formatted(email);
     }
@@ -60,7 +59,7 @@ class UserServiceApplicationTests {
                 .statusCode(201);
 
         // Verify persistence in DB
-        User createdUser = userRepository.findByEmail(email)
+        Participant createdUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new AssertionError("User not found in DB"));
 
         // Basic field assertions
@@ -82,7 +81,7 @@ class UserServiceApplicationTests {
                 .then()
                 .statusCode(201);
 
-        User createdUser = userRepository.findByEmail(email)
+        Participant createdUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new AssertionError("User not found in DB"));
 
         Assertions.assertNotEquals("secret123", createdUser.getPassword());
@@ -132,7 +131,7 @@ class UserServiceApplicationTests {
                 }
                 """;
 
-        User createdUser = userRepository.findByEmail(email)
+        Participant createdUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new AssertionError("User not found in DB"));
 
         RestAssured.given()
@@ -142,7 +141,7 @@ class UserServiceApplicationTests {
                 .then()
                 .statusCode(200);
 
-        User updatedUser = userRepository.findByEmail(email)
+        Participant updatedUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new AssertionError("User not found in DB"));
 
         // Basic field assertions
@@ -170,7 +169,7 @@ class UserServiceApplicationTests {
                 .then()
                 .statusCode(201);
 
-        User createdUser = userRepository.findByEmail(email)
+        Participant createdUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new AssertionError("User not found in DB"));
 
         String updateNotificationSettingsRequest = """
@@ -187,7 +186,7 @@ class UserServiceApplicationTests {
                 .then()
                 .statusCode(200);
 
-        User updatedUser = userRepository.findByEmail(email)
+        Participant updatedUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new AssertionError("User not found in DB"));
 
         // Basic field assertions
@@ -209,7 +208,7 @@ class UserServiceApplicationTests {
                 .then()
                 .statusCode(201);
 
-        User createdUser = userRepository.findByEmail(email)
+        Participant createdUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new AssertionError("User not found in DB"));
 
         String changeUserStatusRequest = """
@@ -225,11 +224,11 @@ class UserServiceApplicationTests {
                 .then()
                 .statusCode(200);
 
-        User updatedUser = userRepository.findByEmail(email)
+        Participant updatedUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new AssertionError("User not found in DB"));
 
         // Basic field assertions
         Assertions.assertNotNull(updatedUser.getId());
-        Assertions.assertEquals(UserStatus.DELETED, updatedUser.getStatus());
+        Assertions.assertEquals(ParticipantStatus.DELETED, updatedUser.getStatus());
     }
 }

@@ -1,29 +1,30 @@
-package com.julienprr.eventmanager.user_service.dto;
+package com.julienprr.eventmanager.user_service.dto.participant;
 
-
-import com.julienprr.eventmanager.user_service.model.Role;
-import com.julienprr.eventmanager.user_service.model.User;
+import com.julienprr.eventmanager.user_service.model.ParticipantStatus;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserProfileResponse {
-
+public class AdminParticipantResponse {
     private String firstname;
     private String lastname;
     private String email;
-    private Role role;
 
-    // Profile info
     private String avatarUrl;
     private String bio;
     private String city;
     private String country;
 
-    // Notification preferences
     private boolean emailNotificationsEnabled;
     private boolean smsNotificationsEnabled;
+
+    private ParticipantStatus status;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime lastLoginAt;
 }

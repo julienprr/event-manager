@@ -1,4 +1,4 @@
-package com.julienprr.eventmanager.user_service.dto;
+package com.julienprr.eventmanager.user_service.dto.participant;
 
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UpdateUserProfileRequest {
+public class UpdateParticipantProfileRequest {
 
     @Size(max = 50)
     private String firstname;

@@ -1,4 +1,4 @@
-package com.julienprr.eventmanager.user_service.dto;
+package com.julienprr.eventmanager.user_service.dto.participant;
 
 import lombok.Getter;
 import lombok.Setter;
